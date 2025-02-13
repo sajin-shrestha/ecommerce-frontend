@@ -5,9 +5,7 @@ import { DemoProductList } from '../../shared/DemoData'
 
 const Cart: React.FC = () => {
   // Initialize cart items with a default quantity of 1
-  const [cartItems, setCartItems] = useState<IProduct[]>(
-    DemoProductList.map((item) => ({ ...item, quantity: item.quantity ?? 1 })),
-  )
+  const [cartItems, setCartItems] = useState<IProduct[]>(DemoProductList)
 
   // Define table columns
   const columns = [
