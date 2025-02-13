@@ -4,5 +4,6 @@ export interface IProduct {
   imageUrl: string
   price: string | number
   discount?: string | number
+  quantity?: number
   //   priceWithoutDiscount: string | number
 }
