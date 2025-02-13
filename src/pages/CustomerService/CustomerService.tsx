@@ -5,13 +5,7 @@ const { Title, Text, Paragraph } = Typography
 
 const CustomerService = () => {
   return (
-    <div
-      style={{
-        padding: '24px',
-        backgroundColor: '#f0f2f5',
-        minHeight: '100vh',
-      }}
-    >
+    <div>
       {/* Custom Page Header */}
       <div
         style={{
@@ -34,7 +28,7 @@ const CustomerService = () => {
           >
             Customer Service
           </Title>
-          <Text type="secondary">We're here to help 24/7</Text>
+          <Text type="secondary">We're here to help 24 / 7</Text>
         </div>
       </div>
 

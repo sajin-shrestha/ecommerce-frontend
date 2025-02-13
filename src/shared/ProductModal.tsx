@@ -9,6 +9,7 @@ import {
   Tag,
   Space,
   Flex,
+  Image,
 } from 'antd'
 import { ShoppingCartOutlined, ShoppingOutlined } from '@ant-design/icons'
 
@@ -64,13 +65,12 @@ const ProductModal: React.FC<ProductModalProps> = ({
           md={12}
         >
           <div style={{ position: 'relative' }}>
-            <img
+            <Image
               src={imageUrl}
               alt={title}
+              width={'100%'}
               style={{
-                width: '100%',
-                height: 'auto',
-                maxHeight: '400px',
+                maxHeight: '350px',
                 objectFit: 'cover',
                 borderRadius: '8px',
               }}

@@ -22,7 +22,7 @@ export default function RootLayout() {
         </Content>
       </Layout>
       <Footer style={{ textAlign: 'center', backgroundColor: '#fff' }}>
-        Tech Bazzar ©{new Date().getFullYear()} All Rights Reserved.
+        TECBAZAR ©{new Date().getFullYear()} All Rights Reserved.
       </Footer>
     </Layout>
   )

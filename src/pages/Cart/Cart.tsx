@@ -105,7 +105,7 @@ const Cart: React.FC = () => {
   }, 0)
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <h1>My Cart</h1>
       <Table
         dataSource={cartItems}

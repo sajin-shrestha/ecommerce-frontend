@@ -7,6 +7,7 @@ import {
   Typography,
   Divider,
   Descriptions,
+  Card,
 } from 'antd'
 import {
   ShoppingCartOutlined,
@@ -23,7 +24,6 @@ interface OrderItem {
   title: string
   quantity: number
   price: string
-  paymentMethod: 'Online' | 'Cash on Delivery'
 }
 
 interface Order {
@@ -32,6 +32,7 @@ interface Order {
   date: string
   total: string
   status: string
+  paymentMethod: string
   items: OrderItem[]
 }
 
@@ -43,13 +44,13 @@ const DemoOrderList: Order[] = [
     date: '2025-01-10',
     total: '$1,299.00',
     status: 'Shipped',
+    paymentMethod: 'Online Payment',
     items: [
       {
         id: 1,
         title: 'Ultra Sleek Laptop',
         quantity: 1,
         price: '$1,299.00',
-        paymentMethod: 'Online',
       },
     ],
   },
@@ -59,20 +60,19 @@ const DemoOrderList: Order[] = [
     date: '2025-01-15',
     total: '$1,198.00',
     status: 'Processing',
+    paymentMethod: 'Cash on Delivery',
     items: [
       {
         id: 2,
         title: 'Wireless Headphones',
         quantity: 1,
         price: '$299.00',
-        paymentMethod: 'Cash on Delivery',
       },
       {
         id: 3,
         title: 'Smartphone Pro',
         quantity: 1,
         price: '$899.00',
-        paymentMethod: 'Online',
       },
     ],
   },
@@ -82,20 +82,19 @@ const DemoOrderList: Order[] = [
     date: '2025-01-15',
     total: '$1,1999.00',
     status: 'Cancelled',
+    paymentMethod: 'Cash on Delivery',
     items: [
       {
         id: 2,
         title: 'Mac Battery',
         quantity: 1,
         price: '$299.00',
-        paymentMethod: 'Cash on Delivery',
       },
       {
         id: 3,
         title: 'Mac Display',
         quantity: 1,
         price: '$899.00',
-        paymentMethod: 'Cash on Delivery',
       },
     ],
   },
@@ -184,19 +183,6 @@ const Order: React.FC = () => {
       dataIndex: 'price',
       key: 'price',
     },
-    {
-      title: 'Payment Method',
-      dataIndex: 'paymentMethod',
-      key: 'paymentMethod',
-      render: (method: string) =>
-        method === 'Online' ? (
-          <Tag color="blue">Online Payment</Tag>
-        ) : (
-          <Tag color="gold">
-            <ShoppingCartOutlined /> Cash on Delivery
-          </Tag>
-        ),
-    },
   ]
 
   const handleModalClose = () => {
@@ -205,64 +191,74 @@ const Order: React.FC = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <Title level={2}>🛒 My Orders</Title>
-      <Table
-        dataSource={DemoOrderList}
-        columns={orderColumns}
-        rowKey="id"
-      />
+    <div>
+      <Title level={2}>My Order's</Title>
+      <Card>
+        <Table
+          dataSource={DemoOrderList}
+          columns={orderColumns}
+          rowKey="id"
+        />
 
-      {/* Order Details Modal */}
-      <Modal
-        open={isModalVisible}
-        title={<Title level={4}>Order Details</Title>}
-        onCancel={handleModalClose}
-        footer={null}
-        width={750}
-        style={{ top: 50 }}
-      >
-        {selectedOrder && (
-          <div>
-            <Descriptions
-              bordered
-              column={2}
-              size="middle"
-            >
-              <Descriptions.Item label="Order Number">
-                {selectedOrder.orderNumber}
-              </Descriptions.Item>
-              <Descriptions.Item label="Order Date">
-                <CalendarOutlined /> {selectedOrder.date}
-              </Descriptions.Item>
-              <Descriptions.Item label="Total Amount">
-                {selectedOrder.total}
-              </Descriptions.Item>
-              <Descriptions.Item label="Status">
-                {getStatusTag(selectedOrder.status)}
-              </Descriptions.Item>
-            </Descriptions>
+        {/* Order Details Modal */}
+        <Modal
+          open={isModalVisible}
+          title={<Title level={4}>Order Details</Title>}
+          onCancel={handleModalClose}
+          footer={null}
+          width={750}
+          style={{ top: 50 }}
+        >
+          {selectedOrder && (
+            <div>
+              <Descriptions
+                bordered
+                column={2}
+                size="middle"
+              >
+                <Descriptions.Item label="Order Number">
+                  {selectedOrder.orderNumber}
+                </Descriptions.Item>
+                <Descriptions.Item label="Order Date">
+                  <CalendarOutlined /> {selectedOrder.date}
+                </Descriptions.Item>
+                <Descriptions.Item label="Total Amount">
+                  {selectedOrder.total}
+                </Descriptions.Item>
+                <Descriptions.Item label="Status">
+                  {getStatusTag(selectedOrder.status)}
+                </Descriptions.Item>
+                <Descriptions.Item label="Payment Method">
+                  <Tag
+                    color="blue"
+                    icon={<ShoppingCartOutlined />}
+                  >
+                    {selectedOrder.paymentMethod}
+                  </Tag>
+                </Descriptions.Item>
+              </Descriptions>
 
-            <Divider />
+              <Divider />
 
-            <Title level={5}>🛍️ Order Items</Title>
-            <Table
-              dataSource={selectedOrder.items}
-              columns={orderItemColumns}
-              rowKey="id"
-              pagination={false}
-              size="small"
-              style={{ marginTop: 10 }}
-            />
+              <Title level={5}>Order Items</Title>
+              <Table
+                dataSource={selectedOrder.items}
+                columns={orderItemColumns}
+                rowKey="id"
+                pagination={false}
+                size="small"
+                style={{ marginTop: 10 }}
+              />
 
-            <Divider />
-            <Paragraph type="secondary">
-              <strong>Note:</strong> The payment method for each item is
-              displayed above.
-            </Paragraph>
-          </div>
-        )}
-      </Modal>
+              <Divider />
+              <Paragraph type="secondary">
+                <strong>Note:</strong> The payment method for each item is
+                displayed above.
+              </Paragraph>
+            </div>
+          )}
+        </Modal>
+      </Card>
     </div>
   )
 }
