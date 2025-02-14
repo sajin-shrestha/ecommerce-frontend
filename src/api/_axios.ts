@@ -3,9 +3,11 @@ import axios, {
   AxiosHeaders,
   AxiosInstance,
   AxiosRequestConfig,
+  AxiosResponse,
+  HttpStatusCode,
 } from 'axios'
 import { BASE_URL } from '../constants'
-import { getAccessToken } from '../utils/tokenStorage'
+import { getAccessToken, clearAccessToken } from '../utils/tokenStorage'
 
 interface IRequestOptions {
   url: AxiosRequestConfig['url']
@@ -31,6 +33,27 @@ axiosInstance.interceptors.request.use(
     return config
   },
   (error: AxiosError) => Promise.reject(error),
+)
+
+// Response Interceptor to handle token expiration (401 Unauthorized)
+axiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response
+  },
+  (error: AxiosError) => {
+    if (error.response?.status === HttpStatusCode.Unauthorized) {
+      const currentPath = window.location.pathname
+
+      // logoutAPI({ refresh_token: getRefreshToken() })
+      clearAccessToken()
+
+      window.location.href = `/login?redirect=${encodeURIComponent(
+        currentPath,
+      )}`
+    }
+
+    return Promise.reject(error)
+  },
 )
 
 export const request = ({

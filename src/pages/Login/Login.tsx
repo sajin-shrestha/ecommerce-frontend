@@ -1,15 +1,42 @@
 import { Form, Input, Button, Card, Typography, Row, Col } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import useAuth from '../../auth/useAuth'
 
 const { Title } = Typography
 
 const Login = () => {
   const navigate = useNavigate()
 
+  const { login } = useAuth()
+  const [loading, setLoading] = useState(false)
+  const [form] = Form.useForm()
+  const location = useLocation()
+
+  const locationPath =
+    location.state?.from || new URLSearchParams(location.search).get('redirect')
+  const redirectTo = locationPath || '/home'
+
   const onFinish = () => {
-    navigate('/home')
-    console.log('Success login')
+    if (!form) {
+      return
+    }
+    setLoading(true)
+
+    // loginAPI(values)
+    //   .then((res) => {
+    //     login(res.data.access, res.data.refresh)
+    //     notification.success({
+    //       message: LOGIN_SUCCESS,
+    //     })
+    navigate(redirectTo, { replace: true })
+    //   })
+    //   .catch((err: AxiosError) => handleFormError(form, err))
+    //   .finally(() => {
+    //     form.resetFields(['password'])
+    //     setLoading(false)
+    //   })
   }
 
   return (

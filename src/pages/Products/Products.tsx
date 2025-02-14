@@ -16,7 +16,7 @@ const Products: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const productsPerPage = 4
+  const productsPerPage = 8
 
   // Filter and sort products
   const filteredProducts = DemoProductList.filter((product) =>

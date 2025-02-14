@@ -9,15 +9,30 @@ import Products from './pages/Products'
 import Cart from './pages/Cart'
 import Order from './pages/Order'
 import CustomerService from './pages/CustomerService'
+import { Suspense } from 'react'
+import PageLoading from './components/PageLoading'
+import { NotAuthenticatedRoute } from './auth/AuthRoutes'
 
 const routes = [
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <NotAuthenticatedRoute>
+        <Suspense fallback={<PageLoading />}>
+          <Login />
+        </Suspense>
+      </NotAuthenticatedRoute>
+    ),
   },
   {
     path: '/signup',
-    element: <Signup />,
+    element: (
+      <NotAuthenticatedRoute>
+        <Suspense fallback={<PageLoading />}>
+          <Signup />
+        </Suspense>
+      </NotAuthenticatedRoute>
+    ),
   },
   {
     path: '/',

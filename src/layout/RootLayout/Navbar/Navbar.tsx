@@ -1,12 +1,22 @@
 import { UserOutlined, LogoutOutlined, DownOutlined } from '@ant-design/icons'
-import { Layout, Avatar, Space, Flex, Image, Dropdown } from 'antd'
+import {
+  Layout,
+  Avatar,
+  Space,
+  Flex,
+  Image,
+  Dropdown,
+  notification,
+} from 'antd'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../../assets/techbazzar-logo.png'
+import useAuth from '../../../auth/useAuth'
 
 const { Header } = Layout
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate()
+  const { logout } = useAuth()
 
   const userDropdownMenuItems = [
     {
@@ -19,7 +29,13 @@ const NavBar: React.FC = () => {
       key: 'logout',
       label: 'Logout',
       icon: <LogoutOutlined />,
-      onClick: () => navigate('/login'),
+      onClick: () => {
+        logout()
+        navigate('/login')
+        notification.success({
+          message: 'Logout Successful',
+        })
+      },
     },
   ]
 
